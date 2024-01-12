@@ -14,7 +14,7 @@ int main()
     ptr = &num2;
     *ptr += num1;
 
-    printf("The values:\nnum1 = %d\nnum2 = %d\n", num1, num2);
+    printf("The values:\nnum1 = %d\nnum2 = %d\n", num1, *ptr);
 
     return 0;
 }
