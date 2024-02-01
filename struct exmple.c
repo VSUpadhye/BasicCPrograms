@@ -5,7 +5,7 @@
 struct numbers{
     int a;
     int b;
-    struct numbers *next;
+    //struct numbers *next;
 };
 
 int main()
