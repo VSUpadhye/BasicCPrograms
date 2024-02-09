@@ -16,6 +16,15 @@ int main()
     printf("Enter the number of employees:");
     scanf("%d", &no_of_emps);
     //printf("The no of emps: %d\n", no_of_emps);
+    struct Employee *ptrEmp = (struct Employee *)malloc(no_of_emps * sizeof(struct Employee));
 
+    if (ptrEmp == NULL)
+    {
+        printf("Memory allocation failed!\n");
+        exit(0);
+    }
+    printf("Memory allocation successful!\n");
+
+    free(ptrEmp);
     return 0;
 }
