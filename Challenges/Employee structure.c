@@ -10,16 +10,23 @@ struct Employee
     float salary;
 };
 
+void PrintEmployee(struct Employee *emp)
+{
+    printf("Employee ID: %d\n", emp->emp_id);
+    printf("Name: %s\n", emp->name);
+    printf("Department: %s\n", emp->department);
+    printf("Salary: %.2f\n\n", emp->salary);
+
+}
+
 void PrintAllEmployees(struct Employee *emp_list, int size)
 {
-    printf("\n\nDetails of all employees:\n");
+    printf("Printing all employee details\n");
     for (int i = 0; i < size; i++)
     {
-        printf("Employee ID: %d\n", (emp_list + i)->emp_id);
-        printf("Name: %s\n", (emp_list + i)->name);
-        printf("Department: %s\n", (emp_list + i)->department);
-        printf("Salary: %.2f\n\n", (emp_list + i)->salary);
+        PrintEmployee((emp_list+i));
     }
+
 }
 
 void ReadInputs(struct Employee *ptr, int size)
@@ -72,6 +79,26 @@ void DeepCopyEmployee(struct Employee *source, struct Employee *dest)
     //printf("%.2f\n%.2f\n", ptr->salary, ptr1->salary);
 }
 
+struct Employee *GetHighestSalary(struct Employee *emp_list, int size)
+{
+    //traverse all node, linear search
+    float max_salary = 0;
+    int max_salary_pos = 0, ind;
+    for (ind = 0; ind < size; ind++)
+    {
+        if (max_salary < (emp_list + ind)->salary)
+        {
+            max_salary = (emp_list + ind)->salary;
+            max_salary_pos = ind;
+        }
+    }
+    //printf("The highest salary index is: %d\n", max_salary_pos);
+    
+    //return first node sal
+    return (emp_list + max_salary_pos);
+}
+
+
 void SortEmployeesOnSalary(struct Employee *ptr, int size)
 {
     int ind1, ind2;
@@ -86,12 +113,6 @@ void SortEmployeesOnSalary(struct Employee *ptr, int size)
             }
         }
     }
-    
-    printf("\nDetails of the employee with higst salary:\n");
-    printf("Employee ID: %d\n", ptr->emp_id);
-    printf("Name: %s\n", ptr->name);
-    printf("Department: %s\n", ptr->department);
-    printf("Salary: %.2f\n\n", ptr->salary);
 }
 
 float GetTotalExpenditure(struct Employee *ptr, int size)
@@ -110,13 +131,12 @@ float GetTotalExpenditure(struct Employee *ptr, int size)
 int main()
 {
     int no_of_emps;
-    float total_expenditure;
     printf("Enter the number of employees:");
     scanf("%d", &no_of_emps);
     //printf("The no of emps: %d\n", no_of_emps);
     
     struct Employee *ptrEmp = (struct Employee *)malloc(no_of_emps * sizeof(struct Employee));
-
+    //struct Employee *highest_salary_employee;
     if (ptrEmp == NULL)
     {
         printf("Memory allocation failed!\n");
@@ -124,11 +144,23 @@ int main()
     }
     //printf("Memory allocation successful!\n");
 
+    //Read all employee details
     ReadInputs(ptrEmp, no_of_emps);
-    total_expenditure = GetTotalExpenditure(ptrEmp, no_of_emps);
-    printf("\n\n\nTotal Expenditure on Salary is: %.2f", total_expenditure);
+
+    //Find the total expenditure and print it
+    printf("Total Expenditure on Salary is: %.2f\n\n", GetTotalExpenditure(ptrEmp, no_of_emps));
+
+    //Get the pointer to highest salary employee and print details of that employee
+    printf("Highest Salary Employee details\n");
+    PrintEmployee(GetHighestSalary(ptrEmp, no_of_emps));
+
+    //Sort the employees based on salary, decreasing order
     SortEmployeesOnSalary(ptrEmp, no_of_emps);
+
+    //Print all employees from the sorted array
     PrintAllEmployees(ptrEmp, no_of_emps);
+
+    //Release memory
     free(ptrEmp);
     return 0;
 }
