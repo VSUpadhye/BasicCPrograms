@@ -12,6 +12,7 @@ struct Employee
 
 void PrintEmployee(struct Employee *emp)
 {
+    printf("Emp pointer : %x\n", emp);
     // printf("Employee ID: %d\n", emp->emp_id);
     printf("Name: %s\n", emp->name);
     // printf("Department: %s\n", emp->department);
@@ -27,6 +28,19 @@ void PrintAllEmployees(struct Employee *head)
     {
         PrintEmployee(currentEmp);
         currentEmp = currentEmp->ptrNext;
+    }
+}
+
+void FreeEmployee(struct Employee *headPtr)
+{
+    struct Employee *currentEmp = headPtr, *next_head;
+
+    while(currentEmp != NULL)
+    {
+        next_head = currentEmp->ptrNext;
+        printf("freed pointer : %x\n", currentEmp);
+        free(currentEmp);
+        currentEmp = next_head;
     }
 }
 
@@ -192,6 +206,7 @@ int main()
     GetHighestSalary(ptrHead);
 
 
-    free(ptrHead);
+    //free(ptrHead);
+    FreeEmployee(ptrHead);
     return 0;
 }
