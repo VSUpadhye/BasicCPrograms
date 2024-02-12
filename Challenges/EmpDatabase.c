@@ -27,7 +27,6 @@ void PrintAllEmployees(struct Employee *head)
     {
         PrintEmployee(currentEmp);
         currentEmp = currentEmp->ptrNext;
-        printf("printing temp value: %x\n", currentEmp);
     }
 
 }
@@ -74,7 +73,7 @@ struct Employee *SortEmployeesOnSalary(struct Employee *headPtr, int size)
     struct Employee *currentEmp = headPtr, *temp_emp, *old_rhs;
     struct Employee *lhs, *rhs;
     
-    printf("head pointer: %.2f\n", headPtr->salary);
+    //printf("head pointer: %.2f\n", headPtr->salary);
     for (ind1 = 0; ind1 < size - 1; ind1++)
     {
         for (ind2 = 0; ind2 < size - ind1 - 1; ind2++)
@@ -84,7 +83,7 @@ struct Employee *SortEmployeesOnSalary(struct Employee *headPtr, int size)
 
             //if ((ptr + ind2)->salary < (ptr + ind2 + 1)->salary)
            //Swap case
-            if (lhs->salary < rhs->salary)//Swap c
+            if (lhs->salary < rhs->salary)
             {
                 
                 //printf("\nhead pointing to: %.2f,    current: %.2f\n", headPtr->salary, currentEmp->salary);
@@ -106,10 +105,15 @@ struct Employee *SortEmployeesOnSalary(struct Employee *headPtr, int size)
                 lhs->ptrNext = temp_emp;
 
             }
+            else //No swap case
+            {
+                old_rhs = currentEmp;
+                currentEmp = rhs;
+            }
             //printf("Current = %.2f\n", currentEmp->salary);
         }
         currentEmp = headPtr;
-        printf("head pointer: %.2f\n", headPtr->salary);
+        //printf("head pointer: %.2f\n", headPtr->salary);
     }
 
     return headPtr;
@@ -149,9 +153,9 @@ int main()
     ReadInputs(ptrHead, no_of_emps);
     //print ptrHead in main:
     //printf("Adress inside head ptr in main: %x\n", ptrHead);
-    printf(" Before sorting Head pointer: %x\n", ptrHead);
+    
     ptrHead = SortEmployeesOnSalary(ptrHead, no_of_emps);
-    printf(" After sorting Head pointer: %x\n", ptrHead);
+    
     PrintAllEmployees(ptrHead);
     //Getting total expenditure of company on salaries
     //printf("\nThe total expenditure of the company on salaries: %.2f\n", GetTotalExpenditure(ptrHead, no_of_emps));
