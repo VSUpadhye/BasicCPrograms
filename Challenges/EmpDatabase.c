@@ -44,15 +44,16 @@ void FreeEmployee(struct Employee *headPtr)
     }
 }
 
-void ReadInputs(struct Employee *headPtr, int size)
+struct Employee *ReadInputs(int size)
 {
-    struct Employee *currentEmp;
+    struct Employee *currentEmp, *head;
 
     printf("Enter employee details:\n\n");
     // print the head in readimputs function;
     // printf("Adress inside head ptr in function: %x\n", headPtr);
 
-    currentEmp = headPtr;
+    currentEmp = (struct Employee *) malloc(1 * sizeof(struct Employee));
+    head = currentEmp;
     for (int ind = 0; ind < size; ++ind)
     {
         // printf("\nEnter employee %d details:\n", ind + 1);
@@ -78,6 +79,7 @@ void ReadInputs(struct Employee *headPtr, int size)
             // printf("Adress inside currentEmp ptr: %x\n", currentEmp);
         }
     }
+    return head;
 }
 
 void GetHighestSalary(struct Employee *head_ptr)
@@ -175,19 +177,20 @@ float GetTotalExpenditure(struct Employee *head_ptr)
 int main()
 {
     int no_of_emps;
+    struct Employee *ptrHead;
     printf("Enter the no. of employees:");
     scanf("%d", &no_of_emps);
 
     // Allocating memory for the head
-    struct Employee *ptrHead = (struct Employee *)malloc(1 * sizeof(struct Employee));
+    /*struct Employee *ptrHead = (struct Employee *)malloc(1 * sizeof(struct Employee));
     if (ptrHead == NULL)
     {
         printf("Memory allocation failed!\n");
         exit(0);
-    }
+    }*/
 
     // Reading inputs from user
-    ReadInputs(ptrHead, no_of_emps);
+    ptrHead = ReadInputs(no_of_emps);
 
     // Getting total expenditure of company on salaries
     printf("\nThe total expenditure of the company on salaries: %.2f\n", GetTotalExpenditure(ptrHead));
