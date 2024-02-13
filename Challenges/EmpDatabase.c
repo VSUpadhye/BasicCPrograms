@@ -104,8 +104,6 @@ void GetHighestSalary(struct Employee *head_ptr)
         }
         
         current_emp = current_emp->ptrNext;
-        //if (current_emp->ptrNext == NULL) current_emp = NULL;
-        
     }
 
     PrintEmployee(highest_salary);
@@ -181,14 +179,6 @@ int main()
     printf("Enter the no. of employees:");
     scanf("%d", &no_of_emps);
 
-    // Allocating memory for the head
-    /*struct Employee *ptrHead = (struct Employee *)malloc(1 * sizeof(struct Employee));
-    if (ptrHead == NULL)
-    {
-        printf("Memory allocation failed!\n");
-        exit(0);
-    }*/
-
     // Reading inputs from user
     ptrHead = ReadInputs(no_of_emps);
 
@@ -205,11 +195,6 @@ int main()
     //printing the details of all employees
     PrintAllEmployees(ptrHead);
 
-    printf("Highest Salary Employee details\n");
-    GetHighestSalary(ptrHead);
-
-
-    //free(ptrHead);
     FreeEmployee(ptrHead);
     return 0;
 }
