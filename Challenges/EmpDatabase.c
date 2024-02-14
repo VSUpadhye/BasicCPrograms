@@ -5,15 +5,15 @@ struct Employee
 {
     int emp_id;
     char name[50];
-    char department[50];
+    //char department[50];
     float salary;
     struct Employee *ptrNext;
 };
 
 void PrintEmployee(struct Employee *emp)
 {
-    printf("Emp pointer : %x\n", emp);
-    // printf("Employee ID: %d\n", emp->emp_id);
+    //printf("Emp pointer : %x\n", emp);
+    printf("Employee ID: %d\n", emp->emp_id);
     printf("Name: %s\n", emp->name);
     // printf("Department: %s\n", emp->department);
     printf("Salary: %.2f\n\n", emp->salary);
@@ -38,7 +38,7 @@ void FreeEmployee(struct Employee *headPtr)
     while(currentEmp != NULL)
     {
         next_head = currentEmp->ptrNext;
-        printf("freed pointer : %x\n", currentEmp);
+        //printf("freed pointer : %x\n", currentEmp);
         free(currentEmp);
         currentEmp = next_head;
     }
@@ -49,21 +49,19 @@ struct Employee *ReadInputs(int size)
     struct Employee *currentEmp, *head;
 
     printf("Enter employee details:\n\n");
-    // print the head in readimputs function;
-    // printf("Adress inside head ptr in function: %x\n", headPtr);
 
     currentEmp = (struct Employee *) malloc(1 * sizeof(struct Employee));
     head = currentEmp;
     for (int ind = 0; ind < size; ++ind)
     {
-        // printf("\nEnter employee %d details:\n", ind + 1);
-        // printf("Enter employee ID:");
-        // scanf("%d", &(ptr + ind)->emp_id);
+        printf("\nEnter employee %d details:\n", ind + 1);
+        printf("Enter employee ID:");
+        scanf("%d", &currentEmp->emp_id);
         printf("Enter employee name:");
         getchar();
         gets(currentEmp->name);
-        // printf("Enter department:");
-        // gets(currentEmp->department);
+        //printf("Enter department:");
+        //gets(currentEmp->department);
         printf("Enter salary:");
         scanf("%f", &currentEmp->salary);
         if ((ind + 1) == size)
@@ -75,8 +73,6 @@ struct Employee *ReadInputs(int size)
         {
             currentEmp->ptrNext = (struct Employee *)malloc(1 * sizeof(struct Employee));
             currentEmp = currentEmp->ptrNext;
-            // print new currentEmp
-            // printf("Adress inside currentEmp ptr: %x\n", currentEmp);
         }
     }
     return head;
@@ -109,13 +105,12 @@ void GetHighestSalary(struct Employee *head_ptr)
     PrintEmployee(highest_salary);
 }
 
-struct Employee *SortEmployeesOnSalary(struct Employee *headPtr, int size)
+void SortEmployeesOnSalary(struct Employee **headPtr, int size)
 {
     int ind1, ind2;
-    struct Employee *currentEmp = headPtr, *temp_emp, *old_rhs;
+    struct Employee *currentEmp = *headPtr, *temp_emp, *old_rhs;
     struct Employee *lhs, *rhs;
 
-    // printf("head pointer: %.2f\n", headPtr->salary);
     for (ind1 = 0; ind1 < size - 1; ind1++)
     {
         for (ind2 = 0; ind2 < size - ind1 - 1; ind2++)
@@ -123,7 +118,6 @@ struct Employee *SortEmployeesOnSalary(struct Employee *headPtr, int size)
             lhs = currentEmp;
             rhs = currentEmp->ptrNext;
 
-            // if ((ptr + ind2)->salary < (ptr + ind2 + 1)->salary)
             // Swap case
             if (lhs->salary < rhs->salary)
             {
@@ -131,7 +125,7 @@ struct Employee *SortEmployeesOnSalary(struct Employee *headPtr, int size)
                 if (ind2 == 0)
                 {
                     // set the head to rhs node
-                    headPtr = rhs;
+                    *headPtr = rhs;
                 }
                 else
                 {
@@ -151,10 +145,8 @@ struct Employee *SortEmployeesOnSalary(struct Employee *headPtr, int size)
                 currentEmp = rhs;
             }
         }
-        currentEmp = headPtr;
+        currentEmp = *headPtr;
     }
-
-    return headPtr;
 }
 
 float GetTotalExpenditure(struct Employee *head_ptr)
@@ -190,7 +182,7 @@ int main()
     GetHighestSalary(ptrHead);
 
     //sorting the employees based on salaries
-    ptrHead = SortEmployeesOnSalary(ptrHead, no_of_emps);
+    SortEmployeesOnSalary(&ptrHead, no_of_emps);
 
     //printing the details of all employees
     PrintAllEmployees(ptrHead);
