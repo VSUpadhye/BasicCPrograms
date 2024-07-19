@@ -18,6 +18,8 @@ public:
     bool Acc_balance();
 
     //constructor
+    Account();
+    Account(string name_val);
     Account(string acc_name, double bal);
 
     //destructor
@@ -45,6 +47,8 @@ bool Account::Acc_balance()
 }
 
 Account::Account(string acc_name, double bal): name{acc_name}, balance{bal}{}
+Account::Account(): Account{"None", 0}{}
+Account::Account(string name_val): Account{name_val, 0}{}
 
 int main()
 {
